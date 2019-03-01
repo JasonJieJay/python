@@ -1,0 +1,37 @@
+1. 将ubuntu系统通过dd方式写入U盘
+
+	sudo fdisk -l			查看upan路径
+
+	sudo umount /dev/sdb1		取消span挂载
+
+	sudo mkfs.vfat /dev/sdb -I	upan格式化
+
+	sudo dd if=/home/jason/桌面/ubuntu-18.04.2-desktop-amd64.iso of=/dev/sdb status=progress
+		/home/jason/桌面/ubuntu-18.04.2-desktop-amd64.iso   是ubuntu系统存放路径
+		/dev/sdb      		是U盘路径
+		status=progress		加速写入
+
+
+参考网址：https://jingyan.baidu.com/article/925f8cb8fb062dc0dde0562a.html
+
+	1.按下电源键，并迅速按F1进入bios模式
+
+	2.进入Security—》Secure Boot改成Disabled
+
+	3.然后进入Startup—》Boot（回车），
+
+		使用减号“-”把USB HDD Kingstom DT microDuo 3.0,上移到第一位，
+
+		注：由于U盘信号不同，名字也不一样，总的来说就是把外接U盘放到第一步启动。
+
+	4.然后再进入Startup—》UEFI/Legacy Boot选项，
+
+		UEFI/Legacy Boot选项选择成Both，
+
+		UEFI/Legacy Boot Priority选择成UEFI First
+
+	5.然后进入Restart, 
+
+		把Load Setup Defaults —》OS Optimized Defaults 设置为Disabled（这是和E540的唯一区别）
+
+	6.最后按F10，保存退出，电脑重新启动，进入系统安装界面
