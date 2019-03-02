@@ -1,3 +1,5 @@
+去重 distinct
+select distinct name,id from user;
 1.数据库
 存放数据的
 
