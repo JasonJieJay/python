@@ -132,6 +132,8 @@ def sum(a,b):
         jisuan=a+b
         return jisuan
 
+
+
 a=sum(20,30)
 print(a)
 ~            
@@ -148,6 +150,24 @@ num1,num2=ret(30,50)
 print(num1,num2)
 
 *************例子××××××××××××××××××××××××××××××××××××××××××
+#coding=utf-8
+def sum(a,b):
+	jisuan=a+b
+	return jisuan
+
+a=sum(20,30)
+print(a)
+
+def ret(a,b):
+	a*=10
+	b*=10
+	return a,b
+num=ret(5,7)
+print(num)
+print(type(num))
+
+num1,num2=ret(30,50)
+print(num1,num2)
 #coding=utf-8
 def print_hello():
 	print('hello!')
@@ -232,6 +252,40 @@ def test1(x,y,**args):
 
 test1(1,2,a=10,b='heygor')
 
+********例子**********************************************************
+
+#coding=utf-8
+def animal(pet1,pet2):
+	print(pet1+'wang!'+pet2+'miao')
+
+#调用函数时候传入2个参数
+animal('dog','cat')
+animal('cat','dog')
+
+
+def animal(pet1,pet2):
+	print(pet1+'  wang!!  '+pet2+'  miao!')
+
+animal(pet2='cat',pet1='2ha')
+
+def animal(pet2,pet1='2ha'):
+	print(pet1+'  wang!!  '+pet2+'  miao!')
+
+animal('bosi')
+animal('jiafei','taidi')
+
+
+print('************')
+def test(x,y,*args):
+	print(x,y,args)
+
+test(1,2,'heogr','song')
+
+def test1(x,y,**args):
+	print(x,y,args)
+
+test1(1,2,a=10,b='heygor')
+
 ==========================变量作用域===============================================================
 
 学习目标
@@ -294,6 +348,49 @@ def test2():
 test1()
 test2()
 
+*******例子*********************************************
+
+#coding=utf-8
+
+'''
+def test1():
+	a=10
+	print('修改前a的值是',a)
+	a=20
+	print('修改后a的值是',a)
+def test():
+	a=40
+	print('我是test中的a',a)
+test1()
+test()
+'''
+'''
+a=100
+print('a的值是',a)
+def test1():
+	a=20
+	print('tes1中a的值是',a)
+def test2():
+	print('test2中a的值是',a)
+test1()
+test2()
+'''
+
+a=100
+print('a的值是',a)
+
+def test1():
+	global a
+	a=200
+	print('test1中修改全局变量为a',a)
+
+def test2():
+	print('test2中使用全局变量a',a)
+
+test1()
+test2()
+
+
 ================================函数的递归=============================================================
 
 学习目标
@@ -313,6 +410,54 @@ a.什么是递归
 4.递归的效率不高，递归层次过多会导致栈溢出(最大递归层数997)
 
 b.递归函数操作
+
+×××××××××××××例子×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
+
+#coding=utf-8
+#嵌套函数
+'''
+def t1():
+	print('im t1!')
+def t2():
+	t1()
+	print('im t2')
+def t3():
+	t2()
+	print('im t3')
+t3()
+'''
+#例子:阶乘   n!=1*2*3*.....
+
+def func(n):
+	if n==1:
+		return n
+	elif n>1:
+		return n*func(n-1)
+	else:
+		return '请传递大于0的参数'
+
+print(func(5))
+#相当于5的阶乘  1*2*3*4*5=120
+'''
+==(5)
+	==(5*func(4))
+		==(4*func(3))
+			...
+'''
+
+#例子：盗梦空间
+def func(n):
+	print('进入到%d层梦'%n)
+	if n==3:
+		print('进入到潜意识区')
+	else:
+		func(n+1)
+	print('从第%d层梦中醒来'%n)
+
+func(1)
+
+
+
 
 ========================匿名函数===========================================================================
 
@@ -352,3 +497,22 @@ num2=int(input('num2'))
 res=operation(num1,num2,lambda a,b:a+b)
 print(res)
 
+×××××××××××××××××××××例子×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××88××
+
+#coding=utf-8
+
+sum=lambda a1,a2:a1+a2
+print(sum(10,20))
+
+stu=[{'name':'tom','age':18},{'name':'jerry','age':20},{'name':'snoopy','age':6}]
+stu.sort(key=lambda x:x['age'])
+print(stu)
+
+def operation(a,b,opt):
+	re=opt(a,b)
+	return re
+
+num1=int(input('num1'))
+num2=int(input('num2'))
+res=operation(num1,num2,lambda a,b:a+b)
+print(res)
