@@ -1,5 +1,37 @@
 去重 distinct
 select distinct name,id from user;
+
+linux下
+
+一、导出数据库用mysqldump命令（注意mysql的安装路径，即此命令的路径）：
+1、导出数据和表结构：
+mysqldump -u用户名 -p密码 数据库名 > 数据库名.sql
+#/usr/local/mysql/bin/   mysqldump -uroot -p abc > abc.sql
+敲回车后会提示输入密码
+
+2、只导出表结构
+mysqldump -u用户名 -p密码 -d 数据库名 > 数据库名.sql
+#/usr/local/mysql/bin/   mysqldump -uroot -p -d abc > abc.sql
+
+注：/usr/local/mysql/bin/  --->  mysql的data目录
+
+
+二、导入数据库
+1、首先建空数据库
+mysql>create database abc;
+
+2、导入数据库
+方法一：
+（1）选择数据库
+mysql>use abc;
+（2）设置数据库编码
+mysql>set names utf8;
+（3）导入数据（注意sql文件的路径）
+mysql>source /home/abc/abc.sql;
+方法二：
+mysql -u用户名 -p密码 数据库名 < 数据库名.sql
+#mysql -uabc_f -p abc < abc.sql
+
 1.数据库
 存放数据的
 
@@ -423,36 +455,205 @@ b.python和数据的交互
 	#关闭链接，释放数据库资源
 	conn.close()
 	
-linux下
+一、以公司员工薪水为案例进行设计(公司员工薪水管理系统)
 
-一、导出数据库用mysqldump命令（注意mysql的安装路径，即此命令的路径）：
-1、导出数据和表结构：
-mysqldump -u用户名 -p密码 数据库名 > 数据库名.sql
-#/usr/local/mysql/bin/   mysqldump -uroot -p abc > abc.sql
-敲回车后会提示输入密码
+题目：
 
-2、只导出表结构
-mysqldump -u用户名 -p密码 -d 数据库名 > 数据库名.sql
-#/usr/local/mysql/bin/   mysqldump -uroot -p -d abc > abc.sql
+	1、新员工王小明，性别是男，年龄30，岗位是测试部的测试工程师，薪水6000(基本工资2800，奖金3200);
+	inser into employ values('YG001','王小明','男',30,'BM002','GW003');
+	inser into salary values('XS004','YG001',2800,3200);	
 
-注：/usr/local/mysql/bin/  --->  mysql的data目录
+	2、王小明试用期过了，表现非常好，公司决定给他基本工资调薪10%，奖金调15%;
+	update salary set basesalary=(select basesalary from salary s,employ e where s.employid=e.employid and ename='王小明' )*1.1;
+	update salary set bonussalary=(select bonussalary from salary s,employ e where s.employid=e.employid and ename='王小明' )*1.15;	
+	update salary set basesalary=basesalary*1.1,bonussalary=bonussalary*1.15 from salary where employid=(select employid form employ where ename='王小明');
+
+	3、查询测试部门最高薪水，最低薪水，平均薪水，显示最高薪水，最低薪水，平均薪水;
+	select d.deptname,max(s.basesalary+s.bonussalary),min(s.basesalary+s.bonussalary),avg(s.basesalary+s.bonussalary) from dept d,employ e,salary s where d.deptid=e.deptid and e.employid=s.employid and d.deptname='测试部门';
+
+	4、查询所有部门的最高薪水，最低水，平均薪水，显示部门，最高薪水，最低薪水，平均薪水,并按部门名升序排序;
+	select d.deptname,max(s.basesalary+s.bonussalary),min(s.basesalary+s.bonussalary),avg(s.basesalary+s.bonussalary) from dept d,employ e,salary s where d.deptid=e.deptid and e.employid=s.employid group by e.deptid order by e.deptid;
+
+	5、统计测试部门有多少员工，显示员工数;
+	select count(e.employid) from dept d,employ e where e.deptid=d.deptid and d.deptname='测试部门' group by e.deptid;
+
+	6、统计所有部门员工数，并按部门进行升序排序，显示部门，员工数;
+	select d.deptname,count(e.employid) from dept d,dmploy e where e.deptid=d.deptid group by d.deptid order by e.deptid;
+
+	7、查询所有姓王的所有员工信息;
+	select * from dept d,station s,employ e,salsry sa where d.deptid=e.deptid and s.stationid=e.stadtionid and e.employid=sa.employid and e.ename like '王%';
+
+	8、按部门，性别统计平均薪水;
+	select d.deptname,e.sex,avg(s.basesalary+s.bonussalary) from dept d,employ e,salary s where d.deptid=e.deptid and e.employid=s.employid group by d.deptid,e.sex;
+
+	9、查询30到40岁 平均薪水;
+	select avg(s.basesalary+s.bonussalary) from employ e,salary s where e.employid=s.employid  and e.age between 30 and 40;
+
+	10、查询测试部薪水最高的员工，显示员工姓名；
+	select e.ename from dept d,employ e,salary s where d.deptid=e.deptid and e.employid=s.employid group by d.deptid having max(s.basesalary+s.bonussalary);
+
+	11、删除王小明的所有信息
+	delete from salary where employid in (select employid from employ where ename='王小明');
+	delete from employ where ename='王小明';
+	delete from employ e,salary s where e.employid=s.employid and ename='王小明';
 
 
-二、导入数据库
-1、首先建空数据库
-mysql>create database abc;
+二、以个人简历为案例进行设计(个人简历管理系统)
 
-2、导入数据库
-方法一：
-（1）选择数据库
-mysql>use abc;
-（2）设置数据库编码
-mysql>set names utf8;
-（3）导入数据（注意sql文件的路径）
-mysql>source /home/abc/abc.sql;
-方法二：
-mysql -u用户名 -p密码 数据库名 < 数据库名.sql
-#mysql -uabc_f -p abc < abc.sql
+题目：
+
+	1、新增王小明个人信息,性别男，年龄30，工作经历在泽林当测试讲师，薪水为6000;
+	
+
+	2、由于录入人员错误，王小明在泽林公司的薪水录入错误，调整为薪水是7000;
+
+
+	3、查询工作经历所在泽林公司的最高薪水，最低薪水，平均薪水，显示：最高薪水，最低薪水，平均薪水;
+
+
+	4、查询所有岗位的最高薪水，最低薪水，平均薪水，显示：岗位,最高薪水，最低薪水，平均薪水并按岗位进行升序排序;
+
+
+	5、查询所有工作单位的最高薪水，最低薪水，平均薪水，显示：工作单位,最高薪水，最低薪水，平均薪水并按工作单位降序排序;
+
+
+	6、统计所有工作单位人员数并按工作单位进行升序排序，显示工作单位，人员数并按工作单位升序排序;
+
+
+	7、查询所有姓王的所有员工信息;
+
+
+	8、按工作单位，性别统计平均薪水，显示：工作单位,性别,平均薪水;
+
+
+	9、查询30到40岁 平均薪水;
+
+
+	10、查询工作经历在泽林的薪水最高的人，显示姓名
+
+
+	11、删除王小明的所有信息
+
+
+
+/*========================公司员工薪水管理系统start========================*/
+/*
+    总薪水=基本薪水+奖金
+    关系：
+        1、employ.deptid = dept.deptid(某个员工属于某个部门)
+        2、employ.stationid = station.stationid(某个员工在某个部门任职的岗位)
+        3、salary.employid = employ.employid(某个员工的薪新)
+*/
+create table dept(
+       deptid number, 
+       deptname varchar2(50)
+);
+alter table DEPT add constraint PK_DEPT primary key(DEPTID);
+comment on table dept is '部门信息';
+comment on column dept.deptid is '部门ID';
+comment on column dept.deptname is '部门名称';
+
+create table station(
+       stationid number,
+       stationname varchar2(50)
+);
+alter table STATION add constraint PK_STATION primary key (STATIONID);
+comment on table station is '岗位信息';
+comment on column station.stationid is '岗位ID';
+comment on column station.stationname is '岗位名称';
+
+create table employ(
+       employID number,
+       ename varchar2(50),
+       sex varchar2(50),
+       age number,
+       deptid number,
+       stationid number
+); 
+alter table EMPLOY add constraint PK_EMPLOY primary key (EMPLOYID);
+comment on table employ is '员工信息';
+comment on column employ.employID is '员工ID';
+comment on column employ.ename is '员工姓名';
+comment on column employ.sex is '性别';
+comment on column employ.age is '年龄';
+comment on column employ.deptid is '部门ID';
+comment on column employ.stationid is '岗位ID';
+
+create table salary(
+       salaryid number,
+       employid number,
+       basesalary number,
+       bonussalary number
+);
+alter table SALARY add constraint PK_salary primary key (SALARYID);
+comment on table salary is '员工薪水';
+comment on column salary.salaryid is '薪水ID';
+comment on column salary.employid is '员工ID';
+comment on column salary.basesalary is '基本薪水';
+comment on column salary.bonussalary is '奖金';
+/*========================公司员工薪水管理系统end========================*/
+
+
+
+/*========================个人简历管理系统start========================*/
+/*
+    关系：
+        1、 companystation.companyid = company.companyid(某个人所在某个公司任职岗位)
+        2、 companystation.personid = person.personid(某个人所在某个公司任职岗位)
+        3、 experience.companystationid = companystation.companystationid(某个人所有任职公司的工作经历)
+*/
+create table person(
+       personID number,
+       ename varchar2(50),
+       sex varchar2(50),
+       age number
+); 
+alter table PERSON add constraint PK_PERSON primary key (PERSONID);
+comment on table person is '个人信息';
+comment on column person.personID is '人员ID';
+comment on column person.ename is '名称';
+comment on column person.sex is '性别';
+comment on column person.age is '年龄';
+
+create table company(
+       companyid number,
+       companyname varchar2(50)
+);
+alter table COMPANY add constraint PK_COMPANY primary key (COMPANYID);
+comment on table company is '工作单位';
+comment on column company.companyid is '公司ID';
+comment on column company.companyname is '公司名称';
+
+create table companystation(
+       companystationid number,
+       companyid number,
+       personid number,
+       stationname varchar2(50)
+);
+alter table COMPANYSTATION add constraint PK_COMPANYSTATION primary key (COMPANYSTATIONID);
+comment on table companystation is '个人所在公司的岗位';
+comment on column companystation.companystationid is '个人所在公司的岗位ID';
+comment on column companystation.companyid is '公司ID';
+comment on column companystation.personid is '个人ID';
+comment on column companystation.stationname is '岗位名称';
+
+create table experience(
+       experienceid number,
+       companystationid number,
+       startdate date,
+       enddate date,
+       descsr varchar2(1000),
+       salary number
+);
+alter table EXPERIENCE add constraint PK_EXPERIENCE primary key (EXPERIENCEID);
+comment on table experience is '个人工作经历';
+comment on column experience.experienceid is '经历ID';
+comment on column experience.companystationid is '个人所在公司的岗位ID';
+comment on column experience.startdate is '工作起始日期';
+comment on column experience.enddate is '工作结束日期';
+comment on column experience.descsr is '工作描述';
+comment on column experience.salary is '薪水';
+/*========================个人简历管理系统end========================*/
 
 
 
