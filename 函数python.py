@@ -70,6 +70,18 @@ b=len
 num=b(l)
 print('列表中的元素数量为:',num)
 
+××××××××例子**********************************************
+#coding=utf-8
+def print_name():
+	print('its big chui!')
+
+print_name()
+
+l=[1,2,3,4]
+b=len
+num=b(l)
+print('列表中的元素数量为:',num)
+
 ================函数的常用格式======return语句=================================================================================================
 学习目标
 掌握函数的常用格式
@@ -134,6 +146,29 @@ print(type(num))
 
 num1,num2=ret(30,50)
 print(num1,num2)
+
+*************例子××××××××××××××××××××××××××××××××××××××××××
+#coding=utf-8
+def print_hello():
+	print('hello!')
+
+print_hello()
+
+
+def sleep():
+	return 'im sleeping!'
+
+s=sleep()
+print(s)
+
+def sub(x,y):
+	print('x+y=',x+y)
+sub(2,3)
+
+def sub(x,y):
+	return x+y
+b=sub(20,30)
+print(b)
 
 =====================函数的传参======================================================================
 
