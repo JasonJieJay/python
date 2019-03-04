@@ -1,8 +1,18 @@
 去重 distinct
 select distinct name,id from user;
 
-显示表的最后一行数据
 select * from test order by 列名 DESC  limit 1;
+
+显示表的最后一行数据
+select count(*) from kr;
+select * from kr limit (上面打行数减1) , 1;
+
+自连查询
+SELECT b.* 
+from shopping as a,shopping as b
+where a.name='惠惠'
+and a.price<b.price 
+order by b.id
 
 linux下
 
