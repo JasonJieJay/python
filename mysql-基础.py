@@ -1,6 +1,9 @@
 去重 distinct
 select distinct name,id from user;
 
+显示表的最后一行数据
+select * from test order by 列名 DESC  limit 1;
+
 linux下
 
 一、导出数据库用mysqldump命令（注意mysql的安装路径，即此命令的路径）：
