@@ -1,3 +1,11 @@
+student_id 自增长： 添加输入时用0代替
+create table person (student_id  int primary key auto_increment,
+name varchar(20),
+sex  varchar(10),
+college varchar(20),
+tel  int,
+class_id  int) charset=utf8;
+
 去重 distinct
 select distinct name,id from user;
 
