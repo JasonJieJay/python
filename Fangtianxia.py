@@ -21,22 +21,22 @@ html=get_response(url)#获取各区响应，希望得到区域名称和全部区
 soup=BeautifulSoup(html,'html.parser')#解析响应体
 results=soup.select('div.qxName > a')#获得全部区域对应的部分url
 other_area=['不限','东莞','惠州','深圳周边']#需要去掉地区列表
-for result in results:
+for result in iter(results):#iter生成器节省内存负担
 	if result.string.strip() not in other_area:#去掉其他区域
-		#yield (result.string,result['href'])
+		#yield (result.string,result['href'])#yield在函数中使用的生成器节省内存负担
 		print(result.string)#打印各区名
 		district_url='https://sz.esf.fang.com'+result['href']#目标区域第一页完整url拼接
 		#print(district_url)#打印各区第一页完整url
 		html = get_response(district_url)#获取各区响应，希望得到总页数
 		soup = BeautifulSoup(html,'html.parser')#解析响应体
 		page = int(soup.select('.fanye .txt')[0].string[1:][:-1])#获取各区域总页数
-		for pn in range(1,page+1):#各区网页信息翻页
+		for pn in iter(range(1,page+1)):#各区网页信息翻页
 			base_url = district_url[:-8]+str(pn)+'_0_0_0/'#每页完整url拼接
 			#print(base_url)#打印各区每页完整rul
 			html = get_response(base_url)#获取每页响应，希望得到感兴趣信息
 			soup = BeautifulSoup(html,'html.parser')#解析响应体
 			results = soup.select('div.list')#提取有效信息部分
-			for result in results:
+			for result in iter(results):
 				half = len(result.select('.dj .half'))#统计差半分的数量
 				no2 = len(result.select('.dj .no2'))#统计差多少个1分的数量
 				try:
@@ -51,10 +51,10 @@ for result in results:
 				except IndexError:
 					info['price']=''#处理无价格报错
 				#print(info)#打印info测试
-				if db['Fangtianxia'].update_one({'name':info['name']},{'$set':info},True):#通过update将数据保存到mongodb
-					print('保存成功',info)#打印保存状态
-				else:
-					print('保存失败',info)
+				#if db['Fangtianxia'].update_one({'name':info['name']},{'$set':info},True):#通过update将数据保存到mongodb
+				print('保存成功',info)#打印保存状态
+				#else:
+				#	print('保存失败',info)
 -----------liange--------------------------------------------------------------------------------------
 import requests
 from bs4 import BeautifulSoup
