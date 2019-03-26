@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 plt.rcParams['font.sans-serif'] = ['SimHei']#显示中文
+#matplotlib默认没有安装中文，需要在matplotlib的ttf目录中添加中文字体
+#~/.local/lib/python3.5/site-packages/matplotlib/mpl-data/fonts/ttf/simhei.ttf
+#~/.cache/matplotlib$ rm -rf *.*  #清除matplotlib缓冲，重置后启动
 plt.rcParams['axes.unicode_minus'] = False#显示负数
 
 x = np.arange(0,4,0.01)
