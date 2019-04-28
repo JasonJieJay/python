@@ -59,3 +59,5 @@ java安装
 pyspark安装
         sudo pip3 install pyspark
 
+vim安装
+        sudo apt install vim
