@@ -34,3 +34,15 @@ mysql
               密码加密方式选择5.x
       查看mysql字符集，mysql8字符集默认为utf-8
            show variables like '%char%'
+        
+        
+visual-studio-code
+       sudo apt install ubuntu-make
+            可以使用umake，（要先安装，非常牛逼的工具，可以安装很多种流行的开发工具）
+       umake web visual-studio-code
+            会问你安装目录，回车即可，接受，完成安装，快捷方式会出现在快速启动栏
+       umake -r web visual-studio-code    即可删除
+    
+    
+pycharm
+        直接在”unbuntu软件“中进行安装
