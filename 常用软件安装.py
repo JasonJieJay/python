@@ -46,3 +46,16 @@ visual-studio-code
     
 pycharm
         直接在”unbuntu软件“中进行安装
+    
+    
+java安装
+        sudo apt install default-jre            
+        sudo apt install openjdk-11-jre-headless
+        sudo apt install openjdk-8-jre-headless
+        sudo apt install default-jdk            
+        sudo apt install ecj 
+        
+        
+pyspark安装
+        sudo pip3 install pyspark
+
