@@ -61,3 +61,11 @@ pyspark安装
 
 vim安装
         sudo apt install vim
+    
+    
+    
+ubuntu 18安装搜狗输入法：
+            下载地址：
+                https://pinyin.sogou.com/linux/?r=pinyin
+            安装步骤：
+                https://blog.csdn.net/lupengCSDN/article/details/80279177
