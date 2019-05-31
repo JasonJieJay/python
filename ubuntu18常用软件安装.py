@@ -79,3 +79,7 @@ anaconda安装：
                 
 opencv安装
         sudo pip3 install opencv-python
+切换回系统自带的python
+/usr/bin/python
+/usr/bin/python3
+        
