@@ -78,4 +78,4 @@ anaconda安装：
 
                 
 opencv安装
-        sudo apt install libopencv-dev
+        sudo pip3 install opencv-python
