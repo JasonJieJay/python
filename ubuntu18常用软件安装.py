@@ -76,3 +76,6 @@ anaconda安装：
             下载链接（Anaconda3-5.1.0-Linux-x86_64.sh）：https://www.continuum.io/downloads
             安装视频：https://www.bilibili.com/video/av48846659?from=search&seid=6567236435893061639
 
+                
+opencv安装
+        sudo apt install libopencv-dev
