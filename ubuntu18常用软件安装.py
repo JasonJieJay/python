@@ -78,13 +78,19 @@ anaconda安装：
 # added by Anaconda3 installer
 #export PATH="/home/jason/anaconda3/bin:$PATH"
 
+安装anaconda后切换回系统自带的python
+/usr/bin/python
+/usr/bin/python3
                 
 opencv安装
         sudo pip3 install opencv-python
-        sudo pip3 install contrib
-切换回系统自带的python
-/usr/bin/python
-/usr/bin/python3
+    查看opencv版本号
+        pkg-config --modversion opencv
+    python opencv3添加opencv-contrib
+        sudo pip3 install opencv-contrib-python
+        
+
+
 
 英文及数字识别 tesseract 安装
         sudo apt-get install tesseract-ocr
