@@ -91,10 +91,16 @@ opencv安装
         
 
 
-
 英文及数字识别 tesseract 安装
         sudo apt-get install tesseract-ocr
         识别：        
             tesseract chepai.jpg test1    tesseract 图片名 保存文件名字（txt）
-
+            
+        中文识别： 需要添加中文语言包 chi_sim.traineddate
+        先查看版本 ： tesseract --version   为tesseract 4.0.0-beta.1
+        4.0语言包下载地址：https://github.com/tesseract-ocr/tessdata/blob/master/chi_sim.traineddata
+            将语言包复制到文件夹：/usr/share/tesseract-ocr/4.00/tessdata/
+            终端中文识别命令：tesseract timg.jpeg result -l chi_sim
+            查看识别结果：cat result.txt
+            
         
