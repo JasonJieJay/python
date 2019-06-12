@@ -1,3 +1,7 @@
+查询时候不显示'_id':
+	db.mycoll.find( { hello: 'world' }, {_id:0 } )
+
+
 #coding=utf-8
 import pymongo
 conn=pymongo.MongoClient(host='127.0.0.1',port=27017)
