@@ -81,7 +81,14 @@ anaconda安装：
                 
 opencv安装
         sudo pip3 install opencv-python
+        sudo pip3 install contrib
 切换回系统自带的python
 /usr/bin/python
 /usr/bin/python3
+
+英文及数字识别 tesseract 安装
+        sudo apt-get install tesseract-ocr
+        识别：        
+            tesseract chepai.jpg test1    tesseract 图片名 保存文件名字（txt）
+
         
